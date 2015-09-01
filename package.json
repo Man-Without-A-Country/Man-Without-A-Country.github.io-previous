@@ -1,0 +1,19 @@
+{
+  "name": "redwood",
+  "version": "1.0.0",
+  "description": "blank",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Man-without-A-Country/Redwood.git"
+  },
+  "author": "James Lopez",
+  "license": "Unlicense",
+  "bugs": {
+    "url": "https://github.com/Man-without-A-Country/Redwood/issues"
+  },
+  "homepage": "https://github.com/Man-without-A-Country/Redwood#readme"
+}
