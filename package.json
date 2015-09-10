@@ -11,7 +11,7 @@
     "url": "git+https://github.com/Man-without-A-Country/Redwood.git"
   },
   "author": "James Lopez",
-  "license": "Unlicense",
+  "license": "MIT",
   "bugs": {
     "url": "https://github.com/Man-without-A-Country/Redwood/issues"
   },
