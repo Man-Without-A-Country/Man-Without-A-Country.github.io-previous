@@ -15,5 +15,9 @@
   "bugs": {
     "url": "https://github.com/Man-without-A-Country/Redwood/issues"
   },
-  "homepage": "https://github.com/Man-without-A-Country/Redwood#readme"
+  "homepage": "https://github.com/Man-without-A-Country/Redwood#readme",
+  "devDependencies": {
+    "grunt-contrib-stylus": "^0.22.0",
+    "grunt-sass": "^1.0.0"
+  }
 }
