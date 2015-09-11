@@ -1,2 +1,3 @@
 name: James Lopez Photography
 markdown: kramdown
+permalink: /blog/:year/:month/:day/:title
