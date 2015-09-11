@@ -112,10 +112,12 @@ module.exports = function(grunt){
 	grunt.loadNpmTasks('grunt-contrib-copy');
 	//wipes build directory clean
 	grunt.loadNpmTasks('grunt-contrib-clean');
+	grunt.loadNpmTasks('grunt-contrib-stylus');
 	//adds vendor previxes to CSS3 properties AFTER stylus files compliled to CSS.
 	grunt.loadNpmTasks('grunt-autoprefixer');
 	//Minifies CSS files and combines them into a single file
 	grunt.loadNpmTasks('grunt-contrib-cssmin');
+	grunt.loadNpmTasks('grunt-contrib-coffee');
 	//Minifies Javascript files and combines into 1 file
 	grunt.loadNpmTasks('grunt-contrib-uglify');
 	//Watches source code for changes and auto builds them
