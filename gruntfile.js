@@ -123,6 +123,7 @@ module.exports = function(grunt){
 	//Watches source code for changes and auto builds them
 	grunt.loadNpmTasks('grunt-contrib-watch');
 	grunt.loadNpmTasks('grunt-contrib-connect');
+	grunt.loadNpmTasks('grunt-jekyll');
 	//Watches the project for chanes, automatically builds them and runs a server
 	grunt.registerTask('default', ['build', 'connect', 'watch']);
 	//Compiles the stylesheets
