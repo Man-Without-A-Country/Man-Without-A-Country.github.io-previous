@@ -7,7 +7,30 @@ module.exports = function(grunt){
 		sass:{
 			dist:{
 				files: {
-					'style/style.css': 'sass/style.scss'
+					'css/style/style.css': 'css/sass/style.scss'
+				}
+			}
+		},
+		jade:{
+			compile:{
+				options: {
+					client: false,
+					pretty: true
+				},
+				files: [{
+					cwd: "app/views",
+					src: "**/*.jade",
+					dest: "build/templates",
+					expand: true,
+					ext: ".html"
+				}]
+			}
+		},
+		jshint: {
+			files: ['gruntfile.js', 'src/**/*.js', 'test/**/*.js'],
+			options: {
+				globals: {
+					jQuery: true
 				}
 			}
 		},
@@ -21,13 +44,13 @@ module.exports = function(grunt){
 		},
 		clean: {
 			build:{
-				src: ['build']
+				src: ['src']
 			},
 			stylesheets : {
-				src: ['build/**/*.css', '!build/application.css']
+				src: ['css/**/*.css', '!build/application.css']
 			},
 			scripts : {
-				src: ['build/**/*.js', '!build/application.js']
+				src: ['js/**/*.js', '!build/application.js']
 			},
 		},
 		stylus: {
@@ -49,14 +72,14 @@ module.exports = function(grunt){
 			build: {
 				expand: true,
 				cwd: 'build',
-				src: [ '**/*.css' ],
+				src: [ 'css/**/*.css' ],
 				dest: 'build'
 			}
 		},
 		cssmin: {
 			build: {
 				files: {
-					'build/application.css': [ 'build/**/*.css']
+					'build/application.css': [ 'stylesheets/*.css']
 				}
 			}
 		},
@@ -81,11 +104,11 @@ module.exports = function(grunt){
 		},
 		watch: {
 			css: {
-				files: '**/*.scss',
+				files: 'css/**/*.scss',
 				tasks: ['sass']
 			},
 			stylesheets: {
-				files: 'source/**/*.styl',
+				files: '**/*.styl',
 				tasks: ['stylesheets']
 			},
 			scripts: {
@@ -95,6 +118,10 @@ module.exports = function(grunt){
 			copy: {
 				files: ['source/**', '!source/**/*.styl', '!source/**/*.coffee'],
 				tasks: ['copy']
+			},
+			js: {
+				files: ['<%= jshint.files %>'],
+				tasks: ['jshint']
 			},
 		},
 		connect: {
@@ -124,6 +151,9 @@ module.exports = function(grunt){
 	grunt.loadNpmTasks('grunt-contrib-watch');
 	grunt.loadNpmTasks('grunt-contrib-connect');
 	grunt.loadNpmTasks('grunt-jekyll');
+	grunt.loadNpmTasks('grunt-contrib-jshint');
+	grunt.loadNpmTasks('grunt-contrib-jade');
+	grunt.registerTask('dev',['sass','jshint']);
 	//Watches the project for chanes, automatically builds them and runs a server
 	grunt.registerTask('default', ['build', 'connect', 'watch']);
 	//Compiles the stylesheets
