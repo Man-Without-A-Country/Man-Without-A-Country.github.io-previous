@@ -1,9 +1,18 @@
 module.exports = function(grunt){
 	//"Wrapper" Function
-
+	//Show elapsed time after tasks
+	require('time-grunt')(grunt);
 	//Project Configuration
 	grunt.initConfig({
 		pkg: grunt.file.readJSON('package.json'),
+		shell: {
+			jekyllBuild: {
+				command: 'jekyll build'
+			},
+			jekyllServe: {
+				command: 'jekyll serve'
+			}
+		},
 		sass:{
 			dist:{
 				files: {
@@ -11,23 +20,8 @@ module.exports = function(grunt){
 				}
 			}
 		},
-		jade:{
-			compile:{
-				options: {
-					client: false,
-					pretty: true
-				},
-				files: [{
-					cwd: "app/views",
-					src: "**/*.jade",
-					dest: "build/templates",
-					expand: true,
-					ext: ".html"
-				}]
-			}
-		},
 		jshint: {
-			files: ['gruntfile.js', 'src/**/*.js', 'test/**/*.js'],
+			files: ['gruntfile.js', 'js/*.js'],
 			options: {
 				globals: {
 					jQuery: true
@@ -42,54 +36,12 @@ module.exports = function(grunt){
 				expand: true
 			}
 		},
-		clean: {
-			build:{
-				src: ['src']
-			},
-			stylesheets : {
-				src: ['css/**/*.css', '!build/application.css']
-			},
-			scripts : {
-				src: ['js/**/*.js', '!build/application.js']
-			},
-		},
-		stylus: {
-			build: {
-				options: {
-					linenos: true,
-					compress: false
-				},
-			files: [{
-				expand: true,
-				cwd: 'source',
-				src: [ '**/*.styl' ],
-				dest: 'build',
-				ext: '.css'
-			}]
-			}
-		},
 		autoprefixer: {
 			build: {
 				expand: true,
 				cwd: 'build',
 				src: [ 'css/**/*.css' ],
 				dest: 'build'
-			}
-		},
-		cssmin: {
-			build: {
-				files: {
-					'build/application.css': [ 'stylesheets/*.css']
-				}
-			}
-		},
-		coffee: {
-			build: {
-				expand: true,
-				cwd: 'source',
-				src: [ '**/*.coffee' ],
-				dest: 'build',
-				ext: '.js'
 			}
 		},
 		uglify: {
@@ -103,6 +55,16 @@ module.exports = function(grunt){
 			}
 		},
 		watch: {
+			jekyll: {
+				files: ['_includes/*.html', '_layouts/*.html',
+						'_posts/*.markdown', '_posts/*.md',
+						'_config.yml', 'index.html'],
+				tasks: ['shell:jeckyllBuild', 'shell:jekyllServe'],
+				options: {
+						interrupt: true,
+						atBegin: true
+				}
+			},
 			css: {
 				files: 'css/**/*.scss',
 				tasks: ['sass']
@@ -111,12 +73,8 @@ module.exports = function(grunt){
 				files: '**/*.styl',
 				tasks: ['stylesheets']
 			},
-			scripts: {
-				files: 'source/**/*.coffee',
-				tasks: ['scripts']
-			},
 			copy: {
-				files: ['source/**', '!source/**/*.styl', '!source/**/*.coffee'],
+				files: ['source/**', '!source/**/*.styl'],
 				tasks: ['copy']
 			},
 			js: {
@@ -128,23 +86,18 @@ module.exports = function(grunt){
 			server: {
 				options: {
 					port: 4000,
-					base: 'build',
+					base: 'shell',
 					hostname: 'localhost'
 				}
 			}
 		}
 	});
+	grunt.loadNpmTasks('grunt-shell');
 	grunt.loadNpmTasks('grunt-contrib-sass');
 	//Copies files from source directory to build
 	grunt.loadNpmTasks('grunt-contrib-copy');
-	//wipes build directory clean
-	grunt.loadNpmTasks('grunt-contrib-clean');
-	grunt.loadNpmTasks('grunt-contrib-stylus');
 	//adds vendor previxes to CSS3 properties AFTER stylus files compliled to CSS.
 	grunt.loadNpmTasks('grunt-autoprefixer');
-	//Minifies CSS files and combines them into a single file
-	grunt.loadNpmTasks('grunt-contrib-cssmin');
-	grunt.loadNpmTasks('grunt-contrib-coffee');
 	//Minifies Javascript files and combines into 1 file
 	grunt.loadNpmTasks('grunt-contrib-uglify');
 	//Watches source code for changes and auto builds them
@@ -152,14 +105,18 @@ module.exports = function(grunt){
 	grunt.loadNpmTasks('grunt-contrib-connect');
 	grunt.loadNpmTasks('grunt-jekyll');
 	grunt.loadNpmTasks('grunt-contrib-jshint');
-	grunt.loadNpmTasks('grunt-contrib-jade');
+	grunt.loadNpmTasks('grunt-contrib-watch');
+	//Register the grunt serve task
+	grunt.registerTask('serve', ['serve']);
+	//Register the grunt jbuild task
+	grunt.registerTask('jbuild', ['shell:jekyllBuild']);
 	grunt.registerTask('dev',['sass','jshint']);
 	//Watches the project for chanes, automatically builds them and runs a server
-	grunt.registerTask('default', ['build', 'connect', 'watch']);
+	grunt.registerTask('default', ['shell', 'connect', 'watch']);
 	//Compiles the stylesheets
-	grunt.registerTask('stylesheets', [ 'stylus', 'autoprefixer', 'cssmin', 'clean:stylesheets' ]);
+	grunt.registerTask('stylesheets', ['autoprefixer']);
 	//Compiles the Javascript files.
-	grunt.registerTask('scripts', ['coffee', 'uglify', 'clean:scripts']);
+	grunt.registerTask('scripts', [ 'uglify']);
 	//Compiles all of the assets and copies the files to the build directory.
-	grunt.registerTask('build', ['clean:build', 'copy','stylesheets', 'scripts']);
+	grunt.registerTask('build', ['copy','stylesheets', 'scripts']);
 };
