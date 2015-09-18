@@ -242,10 +242,12 @@ body {
     opacity: 0
   }
   57% {
-    opacity: 1
+    opacity: 1;
+    animation-timing-function: ease-in;
   }
   75% {
-    opacity: 1
+    opacity: 1;
+    animation-timing-function: ease-out;
   }
   100%{
     opacity:0
