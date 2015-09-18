@@ -1,6 +1,32 @@
+* { 
+ margin: 0; 
+ padding: 0; 
+}
+html,
+body {
+   margin:0;
+   padding:0;
+   height:100%;
+}
+#container {
+   min-height:100%;
+   position:relative;
+}
+#body {
+   padding:0px;
+   padding-bottom:60px;   /* Height of the footer */
+}
+#footer {
+   position:absolute;
+   bottom:0;
+   width:100%;
+   height:60px;   /* Height of the footer */
+   background:none;
+}
+
 @import url(http://fonts.googleapis.com/css?family=Lato:100,300,400,700,900);
 body {
-  background: url(http://www.jamesalopez.com/photos/i-rh6bBwc/1/X3/i-rh6bBwc-X3.jpg) no-repeat center center fixed;
+  background: black no-repeat center fixed;
   background-size: cover;
   font-family: "Lato", sans-serif;
 }
@@ -117,32 +143,111 @@ body {
   text-transform: uppercase;
 }
 .menu li a:hover {
-  color: white;
+  color: grey;
+}
+.cb-slideshow,
+.cb-slideshow:after {
+  position: fixed;
+  width: 100%;
+  height: 100%;
+  top: 0px;
+  left: 0px;
+  z-index: 0;
 }
 
-.wrapper {
-  background: white;
-  height: 1600px;
-  padding: 50px 0px;
+.cb-slideshow:after {
+  content: '';
+  background: transparent url(tympanus.net/Tutorials/CSS3FullscreenSlideshow/images/pattern.png) repeat top left;
+}
+
+.cb-slideshow li span {
   width: 100%;
+  height: 100%;
+  position: absolute;
+  top: 0px;
+  left: 0px;
+  color:transparent;
+  background-size: cover;
+  background-position: 50% 50%;
+  background-repeat: none;
+  opacity: 0;
+  z-index: 0;
+  animation: imageAnimation 60s linear infinite 0s;
 }
-.wrapper .title {
-  color: #e74c3c;
-  display: table;
-  font-size: 3em;
-  font-weight: 100;
-  margin: 0 auto;
-  margin-bottom: 50px;
+
+.cb-slideshow li:nth-child(1) span {
+  background-image: url(http://www.jamesalopez.com/photos/i-MsW4r8z/1/L/i-MsW4r8z-L.jpg);
 }
-.wrapper p {
-  display: block;
-  font-size: 2em;
-  font-weight: 300;
-  text-align: center;
-  width: 100%;
+
+.cb-slideshow li:nth-child(2) span {
+  background-image: url(http://www.jamesalopez.com/photos/i-CsQbzrw/1/L/i-CsQbzrw-L.jpg);
+  animation-delay: 6s;
 }
-@media (max-width: 500px) {
-  .wrapper p {
-    font-size: 1.5em;
+
+.cb-slideshow li:nth-child(3) span {
+  background-image: url(http://www.jamesalopez.com/photos/i-n3WJfsK/1/L/i-n3WJfsK-L.jpg);
+  animation-delay: 12s;
+}
+
+.cb-slideshow li:nth-child(4) span {
+  background-image: url(http://www.jamesalopez.com/photos/i-S6TKx8W/6/L/i-S6TKx8W-L.jpg);
+  animation-delay: 18s;
+}
+
+.cb-slideshow li:nth-child(5) span {
+  background-image: url(http://www.jamesalopez.com/photos/i-s5cB36p/2/L/i-s5cB36p-L.jpg);
+  animation-delay: 24s;
+}
+
+.cb-slideshow li:nth-child(6) span {
+  background-image: url(http://www.jamesalopez.com/photos/i-rh6bBwc/1/L/i-rh6bBwc-L.jpg);
+  animation-delay: 30s;
+}
+
+.cb-slideshow li:nth-child(7) span {
+  background-image: url(http://www.jamesalopez.com/photos/i-3HgG6mJ/1/L/i-3HgG6mJ-L.jpg);
+  animation-delay: 36s;
+}
+
+.cb-slideshow li:nth-child(8) span {
+  background-image: url(http://www.jamesalopez.com/photos/i-nkcJwzB/1/L/i-nkcJwzB-L.jpg);
+  animation-delay: 42s;
+}
+
+.cb-slideshow li:nth-child(9) span {
+  background-image: url(http://www.jamesalopez.com/photos/i-LdkNQC9/1/L/i-LdkNQC9-L.jpg);
+  animation-delay: 48s;
+}
+
+.cb-slideshow li:nth-child(10) span {
+  background-image: url(http://www.jamesalopez.com/photos/i-424Hgbd/1/L/i-424Hgbd-L.jpg);
+  animation-delay: 54s;
+}
+@keyframes imageAnimation {
+  0% {
+    opacity: 0;
+    animation-timing-function: ease-in;
+  }
+  8% {
+    opacity: 1;
+    animation-timing-function: ease-out;
+  }
+  17% {
+    opacity: 1
+  }
+  25% {
+    opacity: 0
+  }
+  49% {
+    opacity: 0
+  }
+  57% {
+    opacity: 1
+  }
+  75% {
+    opacity: 1
+  }
+  100%{
+    opacity:0
   }
 }
